@@ -38,26 +38,13 @@ fn main() {
 		let mut first: u32 = 0;
 		let mut last: u32 = 0;
 
-		for i in 0..length {
-			let slice = line.get(i..).unwrap();
-			for key in map.keys() {
-				if slice.starts_with(key) {
-					first = *map.get(key).unwrap();
-					break;
-				}
-			}
-		}
+		(for (key, value) in map.iter() {
+			line.find(key).map(|idx| (value, idx))
+		}); // Iterator<Option<(Value, Idx>)>> <- min idx
 
-		for i in length..0 {
-
-			let slice = line.get(i..).unwrap();
-			for key in map.keys() {
-				if slice.starts_with(key) {
-					last = *map.get(key).unwrap();
-					break;
-				}
-			}
-		}
+		(for (key, value) in map.iter() {
+			line.rev().find(key.rev()).map(|idx| (value, idx))
+		}); // Iterator<Option<(Value, Idx)>> <- min idx
 
 		first*10 + last
 	}).collect::<Vec<_>>().iter().sum();
