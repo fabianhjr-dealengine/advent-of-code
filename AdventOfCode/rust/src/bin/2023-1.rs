@@ -38,10 +38,19 @@ fn main() {
 		let mut first: u32 = 0;
 		let mut last: u32 = 0;
 
-		(for (key, value) in map.iter() {
+		// Se deja de ejercicio al lector
+		map.iter().map(|(key,value)|
 			line.find(key).map(|idx| (value, idx))
-		}); // Iterator<Option<(Value, Idx>)>> <- min idx
+		); // Iterator<Option<(Value, Idx>)>> <- min idx
 
+		/*
+		let o: Vec<(u32, usize)> = map
+                .iter()
+                .flat_map(|(k, v)| line.find(k).map(|s| (v.to_owned(), s)))
+                .collect();
+		
+		 */
+		// Se deja de ejercicio al lector
 		(for (key, value) in map.iter() {
 			line.rev().find(key.rev()).map(|idx| (value, idx))
 		}); // Iterator<Option<(Value, Idx)>> <- min idx
